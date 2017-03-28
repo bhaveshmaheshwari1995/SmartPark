@@ -2,7 +2,7 @@
 angular.module('apm.monitor', ['ngRoute'])
 .controller('monitorController', function($scope, $http, $stateParams, $state) {
 	console.log('monitor called');
-/*
+
     $scope.data = [{slot:"A1",block:"A",facility:"Aspire",status:'full'},
                 {slot:"A2",block:"A",facility:"Aspire",status:'available'},
                 {slot:"B1",block:"B",facility:"Aspire",status:'full'},
@@ -13,7 +13,7 @@ angular.module('apm.monitor', ['ngRoute'])
                 {slot:"A2",block:"A",facility:"Info",status:'full'},
                 {slot:"B1",block:"B",facility:"Info",status:'full'},
                 {slot:"B2",block:"B",facility:"Info",status:'available'}
-    ];*/
+    ];
 
   $http.get('http://192.168.0.107:4200/parkingInfo')
   .then(function(response){
