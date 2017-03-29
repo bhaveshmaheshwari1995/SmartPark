@@ -7,7 +7,8 @@ var app = angular.module('apm', [
   'apm.login',
   'apm.dashboard',
   'apm.reports',
-  'apm.monitor'
+  'apm.monitor',
+  'apm.settings'
 ]);
 app.config( function($locationProvider, $stateProvider, $urlRouterProvider) {
 	
@@ -33,6 +34,11 @@ app.config( function($locationProvider, $stateProvider, $urlRouterProvider) {
     url: '/monitor/:facility',
     templateUrl: './views/monitor.html',
     controller: 'monitorController'
+  })
+  .state('settings', {
+    url: '/settings',
+    templateUrl: './views/settings.html',
+    controller: 'settingsController'
   })
 });
 
