@@ -23,15 +23,22 @@
           <div class="nav-tabs-custom">
             <!-- Tabs within a box -->
             <ul class="nav nav-tabs pull-right">
-              <li class="active"><a href="#revenue-chart" data-toggle="tab">Area</a></li>
-              <li><a href="#sales-chart" data-toggle="tab">Donut</a></li>
+              <li><a href="#sales-chart" data-toggle="tab"></a></li>
               <li class="pull-left header"><i class="fa fa-inbox"></i>Reports</li>
             </ul>
             <div class="tab-content no-padding">
               <!-- Morris chart - Sales -->
               <!-- <div class="chart tab-pane active"  id="sales-chart" style="position: relative; height: 300px;"></div> -->
-              <div  style="position: relative; height: 300px;">
-                <canvas id="myChart"></canvas>
+              <div  style="position: relative;padding :10px; height: 400px;">
+
+
+                <fusioncharts 
+                width="600" 
+                height="350"
+                type="column2d"
+                datasource="{{myDataSource}}"
+                ></fusioncharts>
+
               </div>
               
             </div>
@@ -92,11 +99,11 @@
 
       <div>
         <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="js/dirPagination.tpl.html" ></dir-pagination-controls>
-    </div>
+      </div>
 
-  </div>
-</section>
-<!-- right col -->
+    </div>
+  </section>
+  <!-- right col -->
 </div>
 <!-- /.row (main row) -->
 

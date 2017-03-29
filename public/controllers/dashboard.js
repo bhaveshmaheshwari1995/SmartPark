@@ -1,5 +1,5 @@
 'use strict';
-angular.module('apm.dashboard', ['ngRoute','ngMaterial'])
+angular.module('apm.dashboard', ['ngRoute','ngMaterial','ng-fusioncharts'])
 .controller('dashboardController', function($scope, $mdDialog) {
 	console.log('dashboard called');
 
@@ -15,6 +15,30 @@ angular.module('apm.dashboard', ['ngRoute','ngMaterial'])
                 {slot:"B2",block:"B",facility:"Info",status:0,in_time:'7-mar-2016',vehicle_no:'TN 14 H 5503'}
                ];
     console.log(JSON.stringify($scope.data));
+
+    $scope.myDataSource = {
+    chart: {
+        caption: "SmartPark",
+        "palette": "2",
+        numberSuffix: " cars"
+    },
+    data:[{
+        label: "S1",
+        value: "50"
+    },
+    {
+        label: "S2",
+        value: "30"
+    },
+    {
+        label: "S3",
+        value: "20"
+    },
+    {
+        label: "S4",
+        value: "40"
+    }]
+};
 
 // [Aspire:A:[A1,A2,A3],[B:[B1,B2,B3]]],[Info:[C:[C1,C2,C3]],[D:[D1,D2,D3]]]]
 /*var finaldata1 = [Aspire:[A:[A1,A2,A3]],[B:[B1,B2,B3]],[Info:[C:[C1,C2,C3]],[D:[D1,D2,D3]]]];
