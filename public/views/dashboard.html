@@ -82,15 +82,23 @@
         <div class="panel-heading custom-panel-heading">Facilities</div>
         <div class="panel-body"> <div class="btn-toolbar">
           <div class="btn-group btn-group-sm">
-            <button ng-repeat = "slot in data  | unique: 'block'" class="btn btn-default custom-btn" ui-sref='monitor({facility:slot.block})'>{{slot.block}}</button>
+            <button dir-paginate = "slot in data | unique: 'block' | itemsPerPage: 2" class="btn btn-default custom-btn" ui-sref='monitor({facility:slot.block})'>{{slot.block}}</button>
 
-          </div>
-        </div></div>
+            <!-- <button ng-repeat = "slot in data  | unique: 'block'" class="btn btn-default custom-btn" ui-sref='monitor({facility:slot.block})'>{{slot.block}}</button>
+          -->
+
+        </div>
       </div>
-    </section>
-    <!-- right col -->
+
+      <div>
+        <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="js/dirPagination.tpl.html" ></dir-pagination-controls>
+    </div>
+
   </div>
-  <!-- /.row (main row) -->
+</section>
+<!-- right col -->
+</div>
+<!-- /.row (main row) -->
 
 </section>
 <!-- /.content -->
