@@ -41,8 +41,8 @@
             <div class="panel-heading custom-panel-heading">Facility {{facility}}</div>
             <div class="panel-body"> <div class="btn-toolbar custom-toolbar">
               <div class="btn-group btn-group-sm">
-                <button ng-repeat='slot in data' class="btn btn-default custom-btn facility {{slot.status}}" id="{{slot.slot}}" data-toggle="modal" data-target="#myModal" style="font-size:15px;"
-                        class='available-block' ng-click = 'slowParkingDatails(slot.slot)' ><span class = "available-block"></span>
+                <button ng-repeat='slot in parkingSlots' class="btn btn-default custom-btn facility {{slot.status}}" id="{{slot.slot}}" data-toggle="modal" data-target="#myModal" style="font-size:15px;"
+                        class='available-block' ng-click = 'slowParkingDetails(slot.slot)' ><span class = "available-block"></span>
                         {{slot.slot}}
                       </button>
 
@@ -97,7 +97,7 @@
       </div>
     </div>
 
-    <div class="col-sm-2">
+<!--     <div class="col-sm-2">
       <div class="panel panel-default custom-panel">
         <div class="panel-heading custom-panel-heading">Edit</div>
         <div class="panel-body">
@@ -106,7 +106,7 @@
           <button class="btn btn-default editing-custom"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </div>
 </section>

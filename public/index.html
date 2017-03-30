@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html ng-app="apm">
 <head>
+<script src="js/jquery-1.8.3.min.js"></script>
   <link rel="stylesheet" href ="bower_components/bootstrap/dist/css/bootstrap.css" >
   <link rel="stylesheet" href ="bower_components/bootstrap/dist/css/bootstrap-theme.css" >
   <link rel="stylesheet" href ="bower_components/angular-material/angular-material.css" >
   <link rel="stylesheet" href ="bower_components/font-awesome/css/font-awesome.css">
+  
   <link rel="stylesheet" href="./css/style.css">
   <meta charset="utf-8">
   <meta charset="utf-8">
@@ -28,12 +30,17 @@
   <link rel="stylesheet" href="plugins/jvectormap/jquery-jvectormap-1.2.2.css">
   <!-- Date Picker -->
   <link rel="stylesheet" href="plugins/datepicker/datepicker3.css">
+
+  <link rel="stylesheet" href="css/bootstrap-datetimepicker.css">
+
+
   <!-- Daterange picker -->
   <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
   <!-- bootstrap wysihtml5 - text editor -->
   <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
 
   <!-- Scripts-->
+  <script src="http://underscorejs.org/underscore-min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.js"></script>
   <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
   <script src="bower_components/angular/angular.js"></script>
@@ -58,11 +65,9 @@
   <div>
     <header class="main-header">
       <!-- Logo -->
-      <a href="index.html" class="logo">
-        <!-- mini logo for sidebar mini 50x50 pixels -->
-        <span class="logo-mini"><b>A</b>SP</span>
+      <a ui-sref='dashboard' class="logo">
         <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg"><b>Aspire</b></span>
+        <span class="logo-lg"><b>{{client}}</b></span>
       </a>
       <!-- Header Navbar: style can be found in header.less -->
       <nav class="navbar navbar-static-top">
@@ -70,14 +75,11 @@
         <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
           <span class="sr-only">Toggle navigation</span>
         </a>
-        <p class="client-list">Client List</p>
+     
+
         <div class="navbar-custom-menu">
           <ul class="nav navbar-nav">
-            <!-- Messages: style can be found in dropdown.less-->
 
-          </li>
-
-          <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="" class="dropdown-toggle" data-toggle="dropdown">
               <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
@@ -119,23 +121,36 @@
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
       <!-- search form -->
-      <!-- <form action="#" method="get" class="sidebar-form">
+      <form class="sidebar-form">
         <div class="input-group">
-          <input type="text" name="q" class="form-control" placeholder="Search...">
+          <input type="text" ng-model="searchClient" class="form-control" placeholder="Search...">
           <span class="input-group-btn">
-            <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+            <button class="btn btn-flat"><i class="fa fa-search"></i>
             </button>
           </span>
         </div>
-      </form> -->
+      </form>
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu">
+        <li><a class="head" style='font-size:20px'><span>Select Client</span></a></li>
+        <li><a ng-click="selectClient(client)"  ui-sref='dashboard' ng-repeat = "client in clientList | filter : searchClient"><span>{{client}}</span></a></li>
+      </ul>
+      <ul class="sidebar-menu">
+      <li><a class="head" style='font-size:20px'><span>Select Page</span></a></li>
         <li><a ui-sref='dashboard'><span>DashBoard</span></a></li>
         <li><a ui-sref='monitor'><span>Monitor</span></a></li>
         <li><a ui-sref='reports'><span>Reports</span></a></li>
         <li><a ui-sref='settings'><span>Settings</span></a></li>
         <li><a href=''><span>General Information</span></a></li>
+        <li class="treeview active">
+          <a href="#">
+            <i class="fa fa-edit"></i> <span>Forms</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+        </li>
       </ul>
     </section>
     <!-- /.sidebar -->
@@ -163,7 +178,6 @@
 <!-- jQuery Knob Chart -->
 <script src="plugins/knob/jquery.knob.js"></script>
 <!-- daterangepicker -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
 <script src="plugins/daterangepicker/daterangepicker.js"></script>
 <!-- datepicker -->
 <script src="plugins/datepicker/bootstrap-datepicker.js"></script>
@@ -181,41 +195,37 @@
 <script src="dist/js/demo.js"></script>
 
 <script type="text/javascript">
-  $(function () {
-    var data = {
-    labels: ["January", "February", "March", "April", "May", "June", "July"],
-    datasets: [
-        {
-            label: "My First dataset",
-            fillColor: "rgba(220,220,220,0.2)",
-            strokeColor: "rgba(220,220,220,1)",
-            pointColor: "rgba(220,220,220,1)",
-            pointStrokeColor: "#fff",
-            pointHighlightFill: "#fff",
-            pointHighlightStroke: "rgba(220,220,220,1)",
-            data: [65, 59, 80, 81, 56, 55, 40]
-        },
-        {
-            label: "My Second dataset",
-            fillColor: "rgba(151,187,205,0.2)",
-            strokeColor: "rgba(151,187,205,1)",
-            pointColor: "rgba(151,187,205,1)",
-            pointStrokeColor: "#fff",
-            pointHighlightFill: "#fff",
-            pointHighlightStroke: "rgba(151,187,205,1)",
-            data: [28, 48, 40, 19, 86, 27, 90]
-        }
-        ]
-    };
-   
-    var option = {
-    responsive: true,
-    };
-   
-    // Get the context of the canvas element we want to select
-    var ctx = document.getElementById("myChart").getContext('2d');
-    var myLineChart = new Chart(ctx).Line(data, option); //'Line' defines type of the chart.
-});
+    $('.form_datetime').datetimepicker({
+        //language:  'fr',
+        weekStart: 1,
+        todayBtn:  1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        forceParse: 0,
+        showMeridian: 1
+    });
+    $('.form_date').datetimepicker({
+        language:  'fr',
+        weekStart: 1,
+        todayBtn:  1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        minView: 2,
+        forceParse: 0
+    });
+    $('.form_time').datetimepicker({
+        language:  'fr',
+        weekStart: 1,
+        todayBtn:  1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 1,
+        minView: 0,
+        maxView: 1,
+        forceParse: 0
+    });
 </script>
 </body>
 
