@@ -6,10 +6,6 @@
         Settings
         <small>Control panel</small>
       </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Dashboard</li>
-      </ol>
     </section>
 
     <!-- Main content -->
@@ -27,107 +23,125 @@
 
           </div>
         </div>
-
-        <!-- ./col -->
-        
-        <!-- ./col -->
       </div>
       <!-- /.row -->
-      <div class="panel panel-default custom-panel col-sm-8">
-        <div class="panel-body">
+      <div class="panel panel-default custom-panel col-sm-8" >
+        <div class="panel-body col-sm-4">
           <div class="row">
            <div class="btn-group">
-            <button type="button" class="btn btn-primary" ng-click="addFacility()" style="margin: 0px 10px;">Add Facility</button>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addSlot" style="margin: 0px 10px;">Add Slot</button>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#mapSensors" style="margin: 0px 10px;">Map Sensors</button>
+            <button type="button" class="btn btn-primary" ng-click="addFacility()" style="width:150px;margin: 0px 10px;">Add Facility</button>
           </div>
         </div>
-      </div>  
-    </div>
-  </section>
-
-  <section class="content">
-    <div ng-show = "showFacility" class="panel panel-default custom-panel col-sm-8">
-      <div class="panel-body">  
         <div class="row">
-
-          <div class="col-sm-4">
-            <label>Facility Name</label>
-            <div class="input-group">
-              <input type="text" class="form-control">
-
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-sm-12 ">
-              <button type="button" class="btn btn-primary custom-btn-primary">Submit</button>
-            </div>
-          </div>
+         <div class="btn-group">
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addSlot" style="width:150px;margin: 10px 10px;">Add Slot</button>
         </div>
       </div>
-    </section>
+      <div class="row">
+       <div class="btn-group">
+        <button type="button" class="btn btn-primary" ng-click="showClient()" style="width:150px;margin: 0px 10px;">Add Client</button>
+      </div>
+    </div>  
+  </div>
+  <div class="panel-body col-sm-8">
+      <div ng-show = "showFacilityUI" >
+      <br>
+      <div class="col-sm-8">
+        <label>Facility Name</label>
+        <div class="input-group">
+          <input type="text" class="form-control" ng-model="newFacilityName">
 
-    <div id="addSlot" class="modal fade" role="dialog">
-      <div class="modal-dialog">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Modal Header</h4>
+        </div>
+        <div class="col-sm-12 ">
+          <button type="button" class="btn btn-primary custom-btn-primary" ng-click="submitFacility()">Submit</button>
+        </div>
+      </div>
+    </div>
+    <div ng-show="showClientUI" >
+      <br>
+      <div class="col-sm-8">
+        <div class="col-sm-6">
+          <label>Client Name</label>
+          <div class="input-group">
+            <input type="text" class="form-control" ng-model="newClientName">
           </div>
-          <div class="modal-body">
-            <div class="panel panel-default custom-panel">
-              <div class="panel-body">  
+        </div>
+        <div class="col-sm-6">
+          <label>Default Facility</label>
+          <div class="input-group">
+          <input type="text" class="form-control" ng-model="newDefaultFacility">
+        </div>
+        </div>
+        <div class="col-sm-12 ">
+          <button type="button" class="btn btn-primary custom-btn-primary" ng-click="submitFacility()">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</section>
+
+<div id="addSlot" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Add Slots</h4>
+      </div>
+      <div class="modal-body">
+        <div class="panel panel-default custom-panel">
+          <div class="panel-body">  
+            <div class="row">
+              <div class="col-sm-4">
+                <label>Facility</label>
+                <div class="dropdown">
+                  <button class="btn  dropdown-toggle" type="button" data-toggle="dropdown">
+                   {{selectedFacilityName}}
+                   <span class="caret"></span></button>
+                   <ul class="dropdown-menu">
+                    <li ng-repeat = "item in facilityList"><a ng-click="selectedFacility(item)">{{item}}</a></li>
+                  </ul>
+                </div> 
+              </div>
+            </div>
+            <div class="row">
+              <div id = 'slotFields'>
                 <div class="row">
+
                   <div class="col-sm-4">
-                    <label>Facility</label>
-                    <div class="dropdown">
-                      <button class="btn  dropdown-toggle" type="button" data-toggle="dropdown">
-                       {{selectedFacilityName}}
-                       <span class="caret"></span></button>
-                       <ul class="dropdown-menu">
-                        <li ng-repeat = "item in facilityList"><a ng-click="selectedFacility(item)">{{item}}</a></li>
-                      </ul>
-                    </div> 
-                  </div>
-                </div>
-                <div class="row">
-                  <div id = 'slotFields'>
-                    <div class="row">
-                
-                    <div class="col-sm-4">
-                      <label>Slot Name</label>
-                      <div class="input-group">
-                        <input type="text" class="form-control" ng-model = "slotData.name">
+                    <label>Slot Name</label>
+                    <div class="input-group">
+                      <input type="text" class="form-control" ng-model = "slotData.name">
 
-                      </div>
-                    </div>
-
-                    <div class="col-sm-4">
-                      <label>Sensor ID</label>
-                      <div class="input-group">
-                        <input type="text" class="form-control" ng-model = "slotData.sensorId">
-                      </div>
-                    </div>
                     </div>
                   </div>
 
-                  <div class="col-sm-12 text-left ">
-                    <button type="button" class="btn btn-primary custom-btn-primary" ng-click='addSlotFields()'>Add more</button>
+                  <div class="col-sm-4">
+                    <label>Sensor ID</label>
+                    <div class="input-group">
+                      <input type="text" class="form-control" ng-model = "slotData.sensorId">
+                    </div>
                   </div>
                 </div>
-                <div class="row">
-                  <div class="col-sm-12 text-right ">
-                    <button type="button" class="btn btn-primary custom-btn-primary" ng-click='addSlots()'>Submit</button>
-                  </div>
-                </div>
+              </div>
+
+              <div class="col-sm-12 text-left ">
+                <button type="button" class="btn btn-primary custom-btn-primary" ng-click='addSlotFields()'>Add more</button>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12 text-right ">
+                <button type="button" class="btn btn-primary custom-btn-primary" ng-click='addSlots()'>Submit</button>
               </div>
             </div>
           </div>
         </div>
-
       </div>
     </div>
+
   </div>
+</div>
+</div>
