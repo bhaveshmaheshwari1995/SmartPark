@@ -11,6 +11,20 @@ angular.module('apm.reports', ['ngRoute','ng-fusioncharts'])
         console.log("to "+$scope.toDate);
     }
 
+    var getFacilityInfo = function(){
+        $http.get('http://54.190.10.153:4200/parkingInfo/')
+        .then(function(response){
+            if(response.data.success){
+                console.log(response.data.data);
+                $scope.data = response.data.data;
+            }
+        },function(response){
+            console.log(response.data);
+        });
+    }
+
+    $scope.data = getFacilityInfo();
+
     $scope.data = [{facility:"A",occupiedHours:10},
                 {facility:"B",occupiedHours:13},
                 {facility:"C",occupiedHours:20},

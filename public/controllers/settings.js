@@ -4,7 +4,44 @@ angular.module('apm.settings', ['ngRoute','ng-fusioncharts'])
 	console.log('settings called');
     $scope.showFacilityUI = false;
     $scope.showClientUI = false;
-    $scope.addFacility = function(){
+    
+    var getFacilitylist = function(client){
+        $http.get('http://54.190.10.153:4200/parkingInfo/'+client)
+        .then(function(response){
+            if(response.data.success){
+                console.log(response.data.data);
+                $scope.data = response.data.data;
+            }
+        },function(response){
+            console.log(response.data);
+        });
+    }
+
+    var addClient = function(){
+        $http.post('http://54.190.10.153:4200/parkingInfo/')
+        .then(function(response){
+            if(response.data.success){
+                console.log(response.data.data);
+                $scope.data = response.data.data;
+            }
+        },function(response){
+            console.log(response.data);
+        });
+    }
+
+    var addSlot = function(data){
+        $http.post('http://54.190.10.153:4200/parkingInfo/'+data)
+        .then(function(response){
+            if(response.data.success){
+                console.log(response.data.data);
+                $scope.data = response.data.data;
+            }
+        },function(response){
+            console.log(response.data);
+        });
+    }
+
+    $scope.showFacility = function(){
         $scope.showFacilityUI = true;
         $scope.showClientUI = false;    
     }
@@ -18,14 +55,29 @@ angular.module('apm.settings', ['ngRoute','ng-fusioncharts'])
         }
         else{
             var dataToSend = {}
-            dataToSend  = {client:$rootScope.client, facility:$scope.newFacilityName};
+            dataToSend  = {client:$rootScope.client.client, facility:$scope.newFacilityName};
             console.log('dataToSend '+JSON.stringify(dataToSend));
+            $scope.newFacilityName = "";
+        }
+    }
+    $scope.submitClient = function(){
+        if($scope.newClientName == undefined || $scope.newClientName == "" || $scope.newDefaultFacility == undefined || $scope.newDefaultFacility == ""){
+            console.log('Error');
+        }
+        else{
+            var dataToSend = {}
+            dataToSend  = {client:$scope.newClientName, defaultFacility:$scope.newDefaultFacility};
+            console.log('dataToSend '+JSON.stringify(dataToSend));
+            $scope.newClientName = "";
+            $scope.newDefaultFacility = "";
+            addClient(dataToSend);
         }
     }
 
+    $scope.facilityList = getFacilitylist($rootScope.client.client);
     $scope.facilityList = ['A','B','C','D'];
 
-    $scope.selectedFacilityName = 'Select Facility';
+    $scope.selectedFacilityName = $rootScope.client.defaultFacility;
     $scope.selectedFacility = function(facility){
         $scope.selectedFacilityName = facility;
     }
@@ -55,11 +107,11 @@ angular.module('apm.settings', ['ngRoute','ng-fusioncharts'])
             console.log('submit error');
         }
         else{
-            var sendSlotDetails = {client:$rootScope.client, slot:slotFields}
-            console.log(sendSlotDetails)
+            var dataToSend = {client:$rootScope.client.client, slot:slotFields}
+            console.log(dataToSend)
+            addSlots(dataToSend)
         }
         slotFields=[]
     }
-
 
 });

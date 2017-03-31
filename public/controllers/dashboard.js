@@ -1,7 +1,21 @@
 'use strict';
 angular.module('apm.dashboard', ['ngRoute','ngMaterial','ng-fusioncharts'])
-.controller('dashboardController', function($scope, $http, $mdDialog) {
+.controller('dashboardController', function($scope,$rootScope, $http, $mdDialog) {
 	console.log('dashboard called');
+
+    var getData = function(client){
+        $http.get('http://54.190.10.153:4200/parkingInfo/'+client)
+        .then(function(response){
+            if(response.data.success){
+                console.log(response.data.data);
+                $scope.data = response.data.data;
+            }
+        },function(response){
+            console.log(response.data);
+        });
+    }
+
+    $scope.data = getData($rootScope.client.client);
 
     $scope.data = 
         [{slot:"A1",facility:"A",status:'available',in_time:'7-mar-2016',vehicle_no:'TN 14 H 1203'},
@@ -17,8 +31,7 @@ angular.module('apm.dashboard', ['ngRoute','ngMaterial','ng-fusioncharts'])
         {slot:"B1",facility:"B",status:'full',in_time:'3-mar-2016',vehicle_no:'TN 14 H 0976'},
         {slot:"B2",facility:"B",status:'available',in_time:'7-mar-2016',vehicle_no:'TN 14 H 5503'}
     ];
-    console.log(JSON.stringify($scope.data));
-
+    
     var facilities = [];
     var facilitiesInfo = {};
     var graphData = [];
@@ -52,16 +65,6 @@ angular.module('apm.dashboard', ['ngRoute','ngMaterial','ng-fusioncharts'])
     });
     graphData = _.uniq(graphData)
 
-    $http.get('http://192.168.0.107:4200/parkingInfo')
-    .then(function(response){
-        if(response.data.success){
-            console.log(response.data.data);
-            $scope.data = response.data.data;
-        }
-    },function(response){
-        console.log(response.data);
-    });
-
     $scope.myDataSource = {
         chart: {
             caption: "SmartPark",
@@ -70,9 +73,4 @@ angular.module('apm.dashboard', ['ngRoute','ngMaterial','ng-fusioncharts'])
         },
         data:graphData
     };
-
-// [Aspire:A:[A1,A2,A3],[B:[B1,B2,B3]]],[Info:[C:[C1,C2,C3]],[D:[D1,D2,D3]]]]
-/*var finaldata1 = [Aspire:[A:[A1,A2,A3]],[B:[B1,B2,B3]],[Info:[C:[C1,C2,C3]],[D:[D1,D2,D3]]]];
-*/
-
 });

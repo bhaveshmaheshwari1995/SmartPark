@@ -43,7 +43,7 @@ app.config( function($locationProvider, $stateProvider, $urlRouterProvider) {
 });
 
 app.run(function($rootScope, $state, $location) {
-      $rootScope.clientList = ['Aspire','Infosys','TCS','HCL'];
+      $rootScope.clientList = [{client:'Aspire',defaultFacility:'A'},{client:'TCS',defaultFacility:'A'},{client:'Infosys',defaultFacility:'A'},{client:'HCL',defaultFacility:'A'}];
       $rootScope.client = $rootScope.clientList[0]
       $rootScope.selectClient = function(client){
         $rootScope.client = client;

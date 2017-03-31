@@ -3,6 +3,18 @@ angular.module('apm.monitor', ['ngRoute'])
 .controller('monitorController', function($scope, $rootScope, $http, $stateParams, $state) {
 	console.log('monitor called ');
 
+    var getData = function(client){
+        $http.get('http://54.190.10.153:4200/parkingInfo/'+client)
+        .then(function(response){
+            if(response.data.success){
+                console.log(response.data.data);
+                $scope.data = response.data.data;
+            }
+        },function(response){
+            console.log(response.data);
+        });
+}
+
   $scope.facility = $stateParams.facility;
 
     $scope.data = 
@@ -18,28 +30,22 @@ angular.module('apm.monitor', ['ngRoute'])
                 {slot:"B2",facility:"B",status:'available',in_time:'7-mar-2016',vehicle_no:'TN 14 H 5503',client:'Infosys'}
    ];
 
+   $scope.data = getData($rootScope.clent.client);
+
   $scope.slowParkingDatails = function(slotName){
     $scope.slotDetails = slotName;
   };
-
-    $http.get('http://54.190.10.153:4200/parkingInfo')
-    .then(function(response){
-     if(response.data.success){
-      console.log(response.data.data);
-      $scope.data = response.data.data;
-    }
-  },function(response){
-  	console.log(response.data);
-  })
 
     var socket = io.connect('http://54.190.10.153:4200');
     socket.on('connect', function(data) {
      console.log("Asdf");
      socket.emit('ldrData', 'ameyashukla');
-   });
+    });
+
     socket.on('server', function(data) {
      console.log('1'+ data);
-   });
+    });
+    
     socket.on('ameyashukla', function(data) {
      console.log(data.slot_no)
      if(data.status == 'available'){
@@ -56,10 +62,8 @@ angular.module('apm.monitor', ['ngRoute'])
   {
     $scope.facility = 'A';
   }
-  console.log($rootScope.client)
-
   $scope.data.forEach(function(entry) {
-        if($scope.facility == entry.facility && $rootScope.client == entry.client)
+        if($scope.facility == entry.facility && $rootScope.client.client == entry.client)
         parkingSlots.push(entry);    
     });
     parkingSlots = _.uniq(parkingSlots);

@@ -20,14 +20,10 @@
         <div class="small-box bg-aqua">
           <div class="inner">
             <h3 class="margin-null">Reports</h3>
-
-            
           </div>
-
         </div>
       </div>
     </div>  
-    
     <div class="row">
       <div class="col-sm-12">
         <div class="panel panel-default custom-panel">
@@ -53,27 +49,17 @@
             <div class="col-sm-4">
              <label>&nbsp;</label>
              <div class="input-group">
-              <input type="text" class="form-control" placeholder="Search" ng-modal="Search">
+              <input type="text" ng-model="searchFacility"  class="form-control">
               <div class="input-group-addon">
                 <span class="glyphicon glyphicon-search"></span>
               </div>
             </div>
           </div>
         </div>
-
-
-        <div class="row">
-          <div class="col-sm-12 text-right ">
-            <button type="button" class="btn btn-primary custom-btn-primary" ng-click="submitDate()">Submit</button>
-          </div>
-        </div>
       </div>
     </div>
   </div>
 </div>
-
-
-
 <div class="row">
   <div class="col-sm-12">
     <div class="panel panel-default custom-panel">
@@ -88,7 +74,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="billInfo in data">
+            <tr ng-repeat="billInfo in data | filter : searchFacility ">
               <td>{{billInfo.facility}}</td>
               <td>{{billInfo.occupiedHours}}</td>
               <td>{{billInfo.occupiedHours * 10}}</td>
