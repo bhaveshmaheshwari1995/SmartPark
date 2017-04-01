@@ -96,6 +96,7 @@ angular.module('apm.settings', ['ngRoute','ng-fusioncharts'])
     $scope.submitFacility = function(){
         if($scope.newFacilityName == undefined || $scope.newFacilityName == "" || $scope.newFacilityCapacity == undefined || $scope.newFacilityCapacity == ""){
             $scope.error = true;
+            $scope.successInSlot = false;
             $scope.errorMessage = "Error Please check input again";
             console.log('Error');
         }
@@ -107,11 +108,14 @@ angular.module('apm.settings', ['ngRoute','ng-fusioncharts'])
             $scope.newFacilityName = "";
             $scope.newFacilityCapacity = "";
             addFacility(dataToSend);
+            $scope.success = true;
+            $scope.successMessage = "Data Entered Successfully";
         }
     }
     $scope.submitClient = function(){
         if($scope.newClientName == undefined || $scope.newClientName == "" || $scope.newDefaultFacility == undefined || $scope.newDefaultFacility == ""){
             $scope.error = true;
+            $scope.successInSlot = false;
             $scope.errorMessage = "Error Please check input again";
         }
         else{
@@ -122,6 +126,8 @@ angular.module('apm.settings', ['ngRoute','ng-fusioncharts'])
             $scope.newClientName = "";
             $scope.newDefaultFacility = "";
             addClient(dataToSend);
+            $scope.success = true;
+            $scope.successMessage = "Data Entered Successfully";
         }
     }
 
@@ -139,6 +145,7 @@ angular.module('apm.settings', ['ngRoute','ng-fusioncharts'])
         if($scope.slotData == undefined || $scope.slotData.name == undefined || $scope.slotData.sensorId == undefined || $scope.slotData.name == "" || $scope.slotData.sensorId == ""){
             console.log('Error');
             $scope.errorInSlot = true;
+            $scope.successInSlot = false;
             $scope.errorMessage = "Error Please check input again";
         }
         else{
@@ -154,6 +161,7 @@ angular.module('apm.settings', ['ngRoute','ng-fusioncharts'])
         if(slotFields.length == 0){
             console.log('error');
             $scope.errorInSlot = true;
+            $scope.successInSlot = false;
             $scope.errorMessage = "Error Please check input again";
         }
         else{
@@ -161,6 +169,8 @@ angular.module('apm.settings', ['ngRoute','ng-fusioncharts'])
             $scope.errorInSlot = false;
             var dataToSend = {client:$rootScope.client.clientId, slot:slotFields}
             addSlots(dataToSend)
+            $scope.successInSlot = true;
+            $scope.successMessage = "Data Entered successfully";
         }
         slotFields=[]
     }

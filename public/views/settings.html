@@ -29,6 +29,10 @@
           <a ng-click="hideError()" class="close" aria-label="close">×</a>
           <strong>Error</strong> {{errorMessage}}.
         </div>
+        <div class="alert alert-success alert-dismissable" ng-show="success">
+          <a ng-click="hideError()" class="close" aria-label="close">&times;</a>
+          <strong>Success!</strong> {{successMessage}}
+        </div>
         <div class="panel-body col-sm-4">
           <div class="row">
            <div class="btn-group">
@@ -47,20 +51,6 @@
     </div>  
   </div>
   <div class="panel-body col-sm-8">
-    <!-- <div ng-show = "showFacilityUI" >
-      <br>
-      <div class="col-sm-8">
-        <label>Facility Name</label>
-        <div class="input-group">
-          <input type="text" class="form-control" ng-model="newFacilityName">
-        </div>
-        <div class="col-sm-12 ">
-          <button type="button" class="btn btn-primary custom-btn-primary" ng-click="submitFacility()">Submit</button>
-        </div>
-      </div>
-    </div> -->
-
-
     <div ng-show="showFacilityUI" >
       <br>
       <div class="col-sm-8">
@@ -125,6 +115,10 @@
             <div class="alert alert-danger alert-dismissable" ng-show="errorInSlot">
           <a ng-click="hideError()" class="close" aria-label="close">×</a>
           <strong>Error</strong> {{errorMessage}}.
+        </div>
+        <div class="alert alert-success alert-dismissable" ng-show="successInSlot">
+          <a ng-click="hideError()" class="close" aria-label="close">&times;</a>
+          <strong>Success!</strong> {{successMessage}}
         </div>
               <div class="col-sm-4">
                 <label>Facility</label>

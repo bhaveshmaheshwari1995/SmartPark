@@ -134,7 +134,8 @@
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu">
           <li><a class="head" style='font-size:20px'><span>Select Client</span></a></li>
-          <li><a ng-click="selectClient(client)"  href='#' ng-repeat = "client in clientList | filter : searchClient"><span>{{client.clientId}}</span></a></li>
+          <li><a ng-click="selectClient(client)" href="#" ui-sref='dashboard' ng-repeat = "client in clientList | filter : searchClient"><span>{{client.clientId}}</span></a></li>
+
         </ul>
         <ul class="sidebar-menu">
           <li><a class="head" style='font-size:20px'><span>Select Page</span></a></li>
@@ -142,7 +143,6 @@
           <li><a ui-sref='monitor'><span>Monitor</span></a></li>
           <li><a ui-sref='reports'><span>Reports</span></a></li>
           <li><a ui-sref='settings'><span>Settings</span></a></li>
-          <li><a href=''><span>General Information</span></a></li>
         </ul>
       </section>
       <!-- /.sidebar -->
