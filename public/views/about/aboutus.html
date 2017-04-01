@@ -24,11 +24,6 @@
       </div>
       <!-- /.row -->
       <div class="panel panel-default custom-panel col-sm-8" >
-      <br>
-        <div class="alert alert-danger alert-dismissable" ng-show="error">
-          <a ng-click="hideError()" class="close" aria-label="close">×</a>
-          <strong>Error</strong> {{errorMessage}}.
-        </div>
         <div class="panel-body col-sm-4">
           <div class="row">
            <div class="btn-group">
@@ -37,7 +32,7 @@
         </div>
         <div class="row">
          <div class="btn-group">
-          <button type="button" class="btn btn-primary" ng-click="loadDefaultFacility()" data-toggle="modal" data-target="#addSlot" style="width:150px;margin: 10px 10px;">Add Slot</button>
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addSlot" style="width:150px;margin: 10px 10px;">Add Slot</button>
         </div>
       </div>
       <div class="row">
@@ -47,7 +42,7 @@
     </div>  
   </div>
   <div class="panel-body col-sm-8">
-    <!-- <div ng-show = "showFacilityUI" >
+    <div ng-show = "showFacilityUI" >
       <br>
       <div class="col-sm-8">
         <label>Facility Name</label>
@@ -58,31 +53,7 @@
           <button type="button" class="btn btn-primary custom-btn-primary" ng-click="submitFacility()">Submit</button>
         </div>
       </div>
-    </div> -->
-
-
-    <div ng-show="showFacilityUI" >
-      <br>
-      <div class="col-sm-8">
-        <div class="col-sm-6">
-          <label>Facility Name</label>
-          <div class="input-group">
-            <input type="text" class="form-control" ng-model="newFacilityName">
-          </div>
-        </div>
-        <div class="col-sm-6">
-          <label>Capacity</label>
-          <div class="input-group">
-            <input type="text" class="form-control" ng-model="newFacilityCapacity">
-          </div>
-        </div>
-        <div class="col-sm-12 ">
-          <button type="button" class="btn btn-primary custom-btn-primary" ng-click="submitFacility()">Submit</button>
-        </div>
-      </div>
     </div>
-
-
     <div ng-show="showClientUI" >
       <br>
       <div class="col-sm-8">
@@ -119,13 +90,8 @@
       </div>
       <div class="modal-body">
         <div class="panel panel-default custom-panel">
-          <div class="panel-body">
-
+          <div class="panel-body">  
             <div class="row">
-            <div class="alert alert-danger alert-dismissable" ng-show="errorInSlot">
-          <a ng-click="hideError()" class="close" aria-label="close">×</a>
-          <strong>Error</strong> {{errorMessage}}.
-        </div>
               <div class="col-sm-4">
                 <label>Facility</label>
                 <div class="dropdown">
@@ -133,7 +99,7 @@
                    {{selectedFacilityName}}
                    <span class="caret"></span></button>
                    <ul class="dropdown-menu">
-                    <li ng-repeat = "item in facilityList"><a ng-click="selectedFacility(item.name)">{{item.name}}</a></li>
+                    <li ng-repeat = "item in facilityList"><a ng-click="selectedFacility(item)">{{item}}</a></li>
                   </ul>
                 </div> 
               </div>

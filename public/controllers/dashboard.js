@@ -1,23 +1,70 @@
 'use strict';
 angular.module('apm.dashboard', ['ngRoute','ngMaterial','ng-fusioncharts'])
-.controller('dashboardController', function($scope,$rootScope, $http, $mdDialog) {
+.controller('dashboardController', function($scope,$rootScope, $http,$timeout, $mdDialog) {
 	console.log('dashboard called');
+    var data=[];
+    $scope.myDataSource={}
+    var callback = function(){
+        $scope.data.forEach(function(entry) {
+            facilities.push(entry.facilityId);    
+        });
+        facilities = _.uniq(facilities);
 
+        facilitiesInfo = []
+        facilities.forEach(function(facility) {
+            var tempArray = [];
+            var tempObj = {};
+            var occupiedCount = 0;
+            $scope.data.forEach(function(slotDetails) {
+                if(slotDetails.facilityId == facility){
+                    tempArray.push(slotDetails.name)
+                    if(slotDetails.status=='available'){
+                        occupiedCount++;
+                    }
+                }
+            })
+            tempObj = {'facility':facility,'slots':tempArray,'count':occupiedCount}
+            facilitiesInfo.push(tempObj)
+        });
+        $scope.facilitiesInfo = facilitiesInfo;
+        console.log("facility Info "+JSON.stringify(facilitiesInfo)); // [{"facility":"A","slots":["A1","A2","A1","A2"],"count":0},{"facility":"B","slots":["B1","B2","B1","B2"],"count":2}]
+        
+        facilitiesInfo.forEach(function(facility) {
+            graphData.push({label:facility.facility,value:facility.count});    
+        });
+        graphData = _.uniq(graphData)
+        console.log(graphData)
+
+        $scope.myDataSource = {
+            chart: {
+                caption: "SmartPark",
+                "palette": "2",
+                numberSuffix: " cars"
+            },
+            data:graphData
+        };
+
+    }
     var getData = function(client){
-        $http.get('http://54.190.10.153:4200/parkingInfo/'+client)
+        console.log('getData called')
+        $http.get('http://54.190.10.153:4200/api/slots/'+client)
         .then(function(response){
             if(response.data.success){
-                console.log(response.data.data);
-                $scope.data = response.data.data;
+                console.log(response.data.slots);
+                $scope.data =  response.data.slots;
+                callback();
             }
         },function(response){
             console.log(response.data);
         });
     }
+    
+    $timeout(function() {
+        getData($rootScope.client.clientId);
+    }, 1500);
+    
 
-    $scope.data = getData($rootScope.client.client);
-
-    $scope.data = 
+   /* $scope.data = 
         [{slot:"A1",facility:"A",status:'available',in_time:'7-mar-2016',vehicle_no:'TN 14 H 1203'},
         {slot:"A2",facility:"A",status:'full',in_time:'1-mar-2016',vehicle_no:'TN 14 H 4503'},
         {slot:"B1",facility:"A",status:'available',in_time:'7-mar-2016',vehicle_no:'TN 14 H 1503'},
@@ -29,48 +76,11 @@ angular.module('apm.dashboard', ['ngRoute','ngMaterial','ng-fusioncharts'])
         {slot:"B1",facility:"B",status:'full',in_time:'3-mar-2016',vehicle_no:'TN 14 H 0976'},
         {slot:"B2",facility:"B",status:'available',in_time:'7-mar-2016',vehicle_no:'TN 14 H 5503'},
         {slot:"B1",facility:"B",status:'full',in_time:'3-mar-2016',vehicle_no:'TN 14 H 0976'},
-        {slot:"B2",facility:"B",status:'available',in_time:'7-mar-2016',vehicle_no:'TN 14 H 5503'}
-    ];
-    
+        {slot:"B2",facility:"B",status:'available',in_time:'7-mar-2016',vehicle_no:'TN 14 H 5503'}];*/
+
     var facilities = [];
     var facilitiesInfo = {};
     var graphData = [];
 
-    $scope.data.forEach(function(entry) {
-        facilities.push(entry.facility);    
-    });
-    facilities = _.uniq(facilities);
-
-    facilitiesInfo = []
-    facilities.forEach(function(facility) {
-        var tempArray = [];
-        var tempObj = {};
-        var occupiedCount = 0;
-        $scope.data.forEach(function(slotDetails) {
-            if(slotDetails.facility == facility){
-                tempArray.push(slotDetails.slot)
-                if(slotDetails.status==1){
-                    occupiedCount++;
-                }
-            }
-        })
-        tempObj = {'facility':facility,'slots':tempArray,'count':occupiedCount}
-        facilitiesInfo.push(tempObj)
-    });
-    $scope.facilitiesInfo = facilitiesInfo;
-    console.log("facility Info "+JSON.stringify(facilitiesInfo)); // [{"facility":"A","slots":["A1","A2","A1","A2"],"count":0},{"facility":"B","slots":["B1","B2","B1","B2"],"count":2}]
     
-    facilitiesInfo.forEach(function(facility) {
-        graphData.push({label:facility.facility,value:facility.count});    
-    });
-    graphData = _.uniq(graphData)
-
-    $scope.myDataSource = {
-        chart: {
-            caption: "SmartPark",
-            "palette": "2",
-            numberSuffix: " cars"
-        },
-        data:graphData
-    };
 });

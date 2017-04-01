@@ -40,11 +40,32 @@ app.config( function($locationProvider, $stateProvider, $urlRouterProvider) {
     templateUrl: './views/settings.html',
     controller: 'settingsController'
   })
+  .state('about', {
+    url: '/about',
+    templateUrl: './views/about/aboutus.html'
+  })
 });
 
-app.run(function($rootScope, $state, $location) {
-      $rootScope.clientList = [{client:'Aspire',defaultFacility:'A'},{client:'TCS',defaultFacility:'A'},{client:'Infosys',defaultFacility:'A'},{client:'HCL',defaultFacility:'A'}];
-      $rootScope.client = $rootScope.clientList[0]
+app.run(function($rootScope, $http) {
+      $rootScope.client ={}
+      var getClientlist = function(){
+        console.log('getting client data')
+        $http.get('http://54.190.10.153:4200/api/clients')
+        .then(function(response){
+            if(response.data.success){
+                console.log(response.data);
+                $rootScope.clientList = response.data.clients;
+                //$rootScope.client = $rootScope.clientList[0]
+                $rootScope.client = {clientId:"Aspire",defaultFacility:'A'}
+                console.log($rootScope.client)
+            }
+        },function(response){
+            console.log(response.data);
+        });
+      }
+      getClientlist();
+
+      
       $rootScope.selectClient = function(client){
         $rootScope.client = client;
         console.log($rootScope.client);  

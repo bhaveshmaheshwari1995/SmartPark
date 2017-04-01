@@ -6,10 +6,6 @@
         Dashboard
         <small>Control panel</small>
       </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Dashboard</li>
-      </ol>
     </section>
 
     <!-- Main content -->
@@ -29,16 +25,13 @@
             <div class="tab-content no-padding">
               <!-- Morris chart - Sales -->
               <!-- <div class="chart tab-pane active"  id="sales-chart" style="position: relative; height: 300px;"></div> -->
-              <div  style="position: relative;padding :10px; height: 400px;">
-
-
+              <div id='showChart' style="position: relative;padding :10px; height: 400px;">
                 <fusioncharts 
                 width="600" 
                 height="350"
                 type="column2d"
                 datasource="{{myDataSource}}"
                 ></fusioncharts>
-
               </div>
               
             </div>
@@ -87,30 +80,23 @@
 
        <div class="panel panel-default custom-panel">
         <div class="panel-heading custom-panel-heading">Facilities</div>
-        <div class="panel-body"> <div class="btn-toolbar">
+        <div class="panel-body">
+        <div class="btn-toolbar">
           <div class="btn-group btn-group-sm">
             <button dir-paginate = "facilityDetail in facilitiesInfo | itemsPerPage: 2" class="btn btn-default custom-btn" ui-sref='monitor({facility:facilityDetail.facility})'>{{facilityDetail.facility}}</button>
-
-            <!-- <button ng-repeat = "slot in data  | unique: 'block'" class="btn btn-default custom-btn" ui-sref='monitor({facility:slot.block})'>{{slot.block}}</button>
-          -->
-
+          </div>
         </div>
+
+          <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="js/dirPagination.tpl.html" ></dir-pagination-controls>
       </div>
-
-      <div>
-        <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="js/dirPagination.tpl.html" ></dir-pagination-controls>
       </div>
-
-    </div>
-  </section>
-  <!-- right col -->
-</div>
-<!-- /.row (main row) -->
-
+    </section>
+    <!-- right col -->
+  </div>
+  <!-- /.row (main row) -->
 </section>
 <!-- /.content -->
 </div>
 <!-- /.control-sidebar -->
   <!-- Add the sidebar's background. This div must be placed
   immediately after the control sidebar -->
-  <div class="control-sidebar-bg"></div>

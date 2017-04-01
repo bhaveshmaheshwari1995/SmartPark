@@ -7,10 +7,6 @@
       Dashboard
       <small>Control panel</small>
     </h1>
-    <ol class="breadcrumb">
-      <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-      <li class="active">Dashboard</li>
-    </ol>
   </section>
 
   <section class="content">
@@ -61,6 +57,11 @@
   </div>
 </div>
 <div class="row">
+<div class="col-sm-12 text-right ">
+<button type="button" class="btn btn-primary custom-btn-primary" ng-click="submitDate()">Submit</button>
+</div>
+</div>
+<div class="row">
   <div class="col-sm-12">
     <div class="panel panel-default custom-panel">
       <div class="panel-heading custom-panel-heading">Reports</div>
@@ -74,10 +75,10 @@
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="billInfo in data | filter : searchFacility ">
+            <tr ng-repeat="billInfo in billingArray | filter : searchFacility ">
               <td>{{billInfo.facility}}</td>
-              <td>{{billInfo.occupiedHours}}</td>
-              <td>{{billInfo.occupiedHours * 10}}</td>
+              <td>{{billInfo.hours}}</td>
+              <td>{{billInfo.hours * 30}}</td>
             </tr>
             <tr>
               <td>&nbsp;</td>
