@@ -9,6 +9,7 @@ angular.module('apm.dashboard', ['ngRoute','ngMaterial','ng-fusioncharts'])
             facilities.push(entry.facilityId);    
         });
         facilities = _.uniq(facilities);
+        console.log(facilities);
 
         facilitiesInfo = []
         facilities.forEach(function(facility) {
@@ -18,7 +19,7 @@ angular.module('apm.dashboard', ['ngRoute','ngMaterial','ng-fusioncharts'])
             $scope.data.forEach(function(slotDetails) {
                 if(slotDetails.facilityId == facility){
                     tempArray.push(slotDetails.name)
-                    if(slotDetails.status=='available'){
+                    if(slotDetails.status=='full'){
                         occupiedCount++;
                     }
                 }
@@ -27,6 +28,7 @@ angular.module('apm.dashboard', ['ngRoute','ngMaterial','ng-fusioncharts'])
             facilitiesInfo.push(tempObj)
         });
         $scope.facilitiesInfo = facilitiesInfo;
+
         console.log("facility Info "+JSON.stringify(facilitiesInfo)); // [{"facility":"A","slots":["A1","A2","A1","A2"],"count":0},{"facility":"B","slots":["B1","B2","B1","B2"],"count":2}]
         
         facilitiesInfo.forEach(function(facility) {
@@ -37,7 +39,7 @@ angular.module('apm.dashboard', ['ngRoute','ngMaterial','ng-fusioncharts'])
 
         $scope.myDataSource = {
             chart: {
-                caption: "SmartPark",
+                caption: "SmartPark Current occupied Parking Stats",
                 "palette": "2",
                 numberSuffix: " cars"
             },
