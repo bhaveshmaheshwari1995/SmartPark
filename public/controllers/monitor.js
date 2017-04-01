@@ -37,22 +37,13 @@ angular.module('apm.monitor', ['ngRoute'])
        });
 
         socket.on('admin/parkingUpdate', function(currSlotInfo) {
-            
-            console.log(JSON.stringify($scope.data));
-            console.log(currSlotInfo.name+" "+$scope.data.name);
             parkingSlots.forEach(function(parkingSlot) {
-                console.log(currSlotInfo.facilityId+" "+parkingSlot.facilityId);
-                console.log(currSlotInfo.clientId+" "+parkingSlot.clientId);
-
                 if((currSlotInfo.name ==   parkingSlot.name )) {
-                console.log(currSlotInfo.name);
-
                 if(currSlotInfo.status == 'available'){
                     document.getElementById(currSlotInfo.name).className = "btn btn-default custom-btn facility available";
                 }else if(currSlotInfo.status == 'full'){
                     document.getElementById(currSlotInfo.name).className = "btn btn-default custom-btn facility full";
                 }
-
             }
             });
 

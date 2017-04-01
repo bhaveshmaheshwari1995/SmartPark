@@ -67,7 +67,6 @@ angular.module('apm.settings', ['ngRoute','ng-fusioncharts'])
         $http.post('http://54.190.10.153:4200/api/clients',data)
         .then(function(response){
             if(response.data.success){
-                console.log(response.data);
                 console.log("Client Added Successfully");
             }
         },function(response){
@@ -79,7 +78,6 @@ angular.module('apm.settings', ['ngRoute','ng-fusioncharts'])
         $http.post('http://54.190.10.153:4200/api/slots',data)
         .then(function(response){
             if(response.data.success){
-                console.log(response.data);
                 console.log("slots added successfully");
             }
         },function(response){
@@ -106,31 +104,21 @@ angular.module('apm.settings', ['ngRoute','ng-fusioncharts'])
             $scope.errorInSlot = false;
             var dataToSend = {}
             dataToSend  = {client:$rootScope.client.clientId, name:$scope.newFacilityName, capacity: $scope.newFacilityCapacity};
-            console.log(dataToSend);
             $scope.newFacilityName = "";
             $scope.newFacilityCapacity = "";
             addFacility(dataToSend);
-
-            /*if(a){
-                console.log("Added");
-            }
-            else{
-                console.log("Error in adding Facility");
-            }*/
         }
     }
     $scope.submitClient = function(){
         if($scope.newClientName == undefined || $scope.newClientName == "" || $scope.newDefaultFacility == undefined || $scope.newDefaultFacility == ""){
-            console.log('Error');
             $scope.error = true;
             $scope.errorMessage = "Error Please check input again";
         }
         else{
+            var dataToSend = {}
             $scope.error = false;
             $scope.errorInSlot = false;
-            var dataToSend = {}
             dataToSend  = {client:$scope.newClientName, defaultFacility:$scope.newDefaultFacility};
-            console.log('dataToSend '+JSON.stringify(dataToSend));
             $scope.newClientName = "";
             $scope.newDefaultFacility = "";
             addClient(dataToSend);
@@ -140,7 +128,6 @@ angular.module('apm.settings', ['ngRoute','ng-fusioncharts'])
     
     $scope.loadDefaultFacility = function(){
         $scope.selectedFacilityName = $rootScope.client.defaultFacility;
-        console.log($rootScope.client.defaultFacility)
     }
     $scope.selectedFacility = function(facility){
         $scope.selectedFacilityName = facility;
@@ -173,7 +160,6 @@ angular.module('apm.settings', ['ngRoute','ng-fusioncharts'])
             $scope.error = false;
             $scope.errorInSlot = false;
             var dataToSend = {client:$rootScope.client.clientId, slot:slotFields}
-            console.log(dataToSend)
             addSlots(dataToSend)
         }
         slotFields=[]

@@ -53,11 +53,9 @@ app.run(function($rootScope, $http) {
         $http.get('http://54.190.10.153:4200/api/clients')
         .then(function(response){
             if(response.data.success){
-                console.log(response.data);
                 $rootScope.clientList = response.data.clients;
                 //$rootScope.client = $rootScope.clientList[0]
                 $rootScope.client = {clientId:"Aspire",defaultFacility:'A'}
-                console.log($rootScope.client)
             }
         },function(response){
             console.log(response.data);
@@ -67,8 +65,7 @@ app.run(function($rootScope, $http) {
 
       
       $rootScope.selectClient = function(client){
-        $rootScope.client = client;
-        console.log($rootScope.client);  
+        $rootScope.client = client; 
       }
 
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {

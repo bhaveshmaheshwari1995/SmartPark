@@ -9,6 +9,10 @@ angular.module('apm.reports', ['ngRoute','ng-fusioncharts'])
         var tempFacility = []
         var parkingSlots = $scope.data.parkingSlots;
         var orders = $scope.data.orders;
+        if(orders>5){
+            orders.slice(0,5);
+        }
+
         console.log('parkingSlots ',parkingSlots);
         console.log('orders ',orders);
         var tempslotid='';
@@ -17,9 +21,7 @@ angular.module('apm.reports', ['ngRoute','ng-fusioncharts'])
             // tempslotid = order.slotId;
             parkingSlots.forEach(function(parkingSlot) {
                 if(parkingSlot.slotId == order.slotId) {
-                    console.log(parkingSlot.slotId)
                     var occHours = (new Date(order.outTime) - new Date(order.inTime))/(60*60*1000);
-
                     if(tempFacility.length==0){
                         tempFacility.push({facility:parkingSlot.facilityId,hours:occHours})
                     }else{
@@ -29,14 +31,14 @@ angular.module('apm.reports', ['ngRoute','ng-fusioncharts'])
                         }
                         else{
                             tempFacility.push({facility:parkingSlot.facilityId,hours:occHours})
-                            console.log(tempFacility)
+                            //console.log(tempFacility)
                         }
                     });    
                     }
                 }
             });
         });
-        console.log(tempFacility)
+
         $scope.billingArray = tempFacility;
         var sum = 0;
         $scope.billingArray.forEach(function(entry) {
