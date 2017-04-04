@@ -1,54 +1,55 @@
 'use strict';
 angular.module('apm.monitor', ['ngRoute'])
 .controller('monitorController', function($scope, $rootScope, $http, $stateParams,$timeout, $state) {
-    console.log('monitor called ');
-    
-    $scope.facility = $stateParams.facility;
-    $scope.data ={}
+	console.log('monitor called ');
+	$scope.parkingSlots = [];
 
-    var callback=function() {
+	var socket = io.connect(config.hostname);
+	socket.on('connect', function(data) {
+		console.log("websocket connected");
+	});
 
+	socket.on('admin/parkingUpdate', function(currSlotInfo) {
+		console.log(currSlotInfo)
+		$scope.parkingSlots.forEach(function(parkingSlot) {
+			if((currSlotInfo.name ==   parkingSlot.name )) {
+				if(currSlotInfo.status == 'available'){
+					document.getElementById(currSlotInfo.name).className = "btn btn-default custom-btn facility available";
+					$scope.parkingSlots.inTime = "not available";
+					$scope.parkingSlots.regNo = "not available";
 
-        $scope.slowParkingDetails = function(slotName){
-            $scope.slotDetails = slotName;
-            console.log($scope.slotDetails)
-        };  
+				}else if(currSlotInfo.status == 'full'){
+					document.getElementById(currSlotInfo.name).className = "btn btn-default custom-btn facility full";
+					$scope.parkingSlots.inTime = currSlotInfo.inTime;
+					$scope.parkingSlots.regNo = currSlotInfo.regNo;
+				}
+			}
+		});
+	});
 
-        var parkingSlots = [];
-        
-        if($scope.facility == "")
-        {
-            console.log($rootScope.client.defaultFacility)
-            $scope.facility = $rootScope.client.defaultFacility;
-        }
-        console.log($scope.data)
-        $scope.data.forEach(function(entry) {
-            console.log($scope.facility +" "+entry.facilityId+" "+$rootScope.client.clientId+' '+entry.clientId)
-            if($scope.facility == entry.facilityId && $rootScope.client.clientId == entry.clientId)
-                parkingSlots.push(entry);    
-        });
-        console.log(parkingSlots)
-        $scope.parkingSlots = parkingSlots;
+	$scope.facility = $stateParams.facility;
+	$scope.data ={}
 
-        var socket = io.connect('http://54.190.10.153:4200');
-        socket.on('connect', function(data) {
-           console.log("websocket 1 called");
-           socket.emit('ldrData', 'ameyashukla');
-       });
+	var callback=function() {
 
-        socket.on('admin/parkingUpdate', function(currSlotInfo) {
-            parkingSlots.forEach(function(parkingSlot) {
-                if((currSlotInfo.name ==   parkingSlot.name )) {
-                if(currSlotInfo.status == 'available'){
-                    document.getElementById(currSlotInfo.name).className = "btn btn-default custom-btn facility available";
-                }else if(currSlotInfo.status == 'full'){
-                    document.getElementById(currSlotInfo.name).className = "btn btn-default custom-btn facility full";
-                }
-            }
-            });
+		$scope.slowParkingDetails = function(slotName){
+			$scope.slotDetails = slotName;
+			console.log($scope.slotDetails)
+		};
+		if($scope.facility == "")
+		{
+			console.log($rootScope.client.defaultFacility)
+			$scope.facility = $rootScope.client.defaultFacility;
+		}
 
-           
-       });
+		$scope.data.forEach(function(entry) {
+			console.log($scope.facility +" "+entry.facilityId+" "+$rootScope.client.clientId+' '+entry.clientId)
+			if($scope.facility == entry.facilityId && $rootScope.client.clientId == entry.clientId)
+				entry.inTime = "not available";
+				entry.regNo = "not available";
+				$scope.parkingSlots.push(entry);    
+		});
+		console.log($scope.parkingSlots)
 
         /*{ regNo: "W, b l lus  ", inTime: "2017-04-01T00:57:06.486Z", _id: "58de977e2b8945050d70e117", name: "B2", slotId: "sense06",
         facilityId: "B", clientId: "Aspire", status: "full", __v: 0 }*/
@@ -57,21 +58,22 @@ angular.module('apm.monitor', ['ngRoute'])
 
     var getData = function(client){
 
-        console.log('getData called')
-        $http.get('http://54.190.10.153:4200/api/slots/'+client)
-        .then(function(response){
-            if(response.data.success){
-                console.log(response.data.slots);
-                $scope.data = response.data.slots;
-                callback();
-            }
-        },function(response){
-            console.log(response.data);
-        });
+    	console.log('getData called')
+    	$http.get(config.hostname+'/api/slots/'+client)
+    	.then(function(response){
+    		console.log(response.data);
+    		if(response.data.success){
+    			console.log(response.data.slots);
+    			$scope.data = response.data.slots;
+    			callback();
+    		}
+    	},function(response){
+    		console.log(response.data);
+    	});
     }
     
     $timeout(function() {
-        getData($rootScope.client.clientId);
+    	getData($rootScope.client.clientId);
     }, 1500);
 
 
@@ -90,7 +92,7 @@ angular.module('apm.monitor', ['ngRoute'])
    ];
    */
 
-
+   console.log($state.current.name)
 
 });
 

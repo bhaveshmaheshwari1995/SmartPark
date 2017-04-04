@@ -2,13 +2,13 @@
 
 // Declare app level module which depends on views, and components
 var app = angular.module('apm', [
-  'ui.router',
-  'angularUtils.directives.dirPagination',
-  'apm.login',
-  'apm.dashboard',
-  'apm.reports',
-  'apm.monitor',
-  'apm.settings'
+'ui.router',
+'angularUtils.directives.dirPagination',
+'apm.login',
+'apm.dashboard',
+'apm.reports',
+'apm.monitor',
+'apm.settings'
 ]);
 app.config( function($locationProvider, $stateProvider, $urlRouterProvider) {
 	
@@ -46,12 +46,13 @@ app.config( function($locationProvider, $stateProvider, $urlRouterProvider) {
   })
 });
 
-app.run(function($rootScope, $http) {
+app.run(function($rootScope, $http, $state) {
       $rootScope.client ={}
       var getClientlist = function(){
         console.log('getting client data')
-        $http.get('http://54.190.10.153:4200/api/clients')
+        $http.get(config.hostname+'/api/clients')
         .then(function(response){
+            console.log(response.data);
             if(response.data.success){
                 $rootScope.clientList = response.data.clients;
                 //$rootScope.client = $rootScope.clientList[0]
@@ -65,7 +66,8 @@ app.run(function($rootScope, $http) {
 
       
       $rootScope.selectClient = function(client){
-        $rootScope.client = client; 
+        $rootScope.client = client;
+        $state.go('dashboard',{},{reload: 'dashboard'});
       }
 
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {

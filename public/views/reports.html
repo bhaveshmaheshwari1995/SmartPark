@@ -2,12 +2,6 @@
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
-  <section class="content-header">
-    <h1>
-      Dashboard
-      <small>Control panel</small>
-    </h1>
-  </section>
 
   <section class="content">
     <div class="row">
@@ -29,7 +23,7 @@
               <div class="col-sm-4">
                 <label>From</label>
                 <div class="input-group date form_datetime" data-date="2017-01-01T00:00:00Z" data-link-field="dtp_input1">
-                <input class="form-control" type="text" readonly id="fromDate">
+                  <input class="form-control" type="text" readonly id="fromDate">
                   <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
                   <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
                 </div>
@@ -57,9 +51,9 @@
   </div>
 </div>
 <div class="row">
-<div class="col-sm-12 text-right ">
-<button type="button" class="btn btn-primary custom-btn-primary" ng-click="submitDate()">Submit</button>
-</div>
+  <div class="col-sm-12 text-right ">
+    <button type="button" class="btn btn-primary custom-btn-primary" ng-click="submitDate()">Submit</button>
+  </div>
 </div>
 <div class="row">
   <div class="col-sm-12">
@@ -92,11 +86,9 @@
   </div>
 </div>
 </section>
-
-<!-- /.content -->
-</div>
-</div>
 <!-- ./wrapper -->
+</div>
+
 <script src="bootstrap/js/bootstrap.min.js"></script>
 <script src="js/bootstrap-datetimepicker.js"></script>
 <script type="text/javascript">
@@ -106,37 +98,3 @@
     todayBtn: true
   });
 </script>
-
-<!-- <script type="text/javascript">
-    $('.form_datetime').datetimepicker({
-        //language:  'fr',
-        weekStart: 1,
-        todayBtn:  1,
-        autoclose: 1,
-        todayHighlight: 1,
-        startView: 2,
-        forceParse: 0,
-        showMeridian: 1
-    });
-    $('.form_date').datetimepicker({
-        language:  'fr',
-        weekStart: 1,
-        todayBtn:  1,
-        autoclose: 1,
-        todayHighlight: 1,
-        startView: 2,
-        minView: 2,
-        forceParse: 0
-    });
-    $('.form_time').datetimepicker({
-        language:  'fr',
-        weekStart: 1,
-        todayBtn:  1,
-        autoclose: 1,
-        todayHighlight: 1,
-        startView: 1,
-        minView: 0,
-        maxView: 1,
-        forceParse: 0
-    });
-</script>  -->

@@ -24,7 +24,7 @@
       </div>
       <!-- /.row -->
       <div class="panel panel-default custom-panel col-sm-8" >
-      <br>
+        <br>
         <div class="alert alert-danger alert-dismissable" ng-show="error">
           <a ng-click="hideError()" class="close" aria-label="close">×</a>
           <strong>Error</strong> {{errorMessage}}.
@@ -58,12 +58,6 @@
           <label>Facility Name</label>
           <div class="input-group">
             <input type="text" class="form-control" ng-model="newFacilityName">
-          </div>
-        </div>
-        <div class="col-sm-6">
-          <label>Capacity</label>
-          <div class="input-group">
-            <input type="text" class="form-control" ng-model="newFacilityCapacity">
           </div>
         </div>
         <div class="col-sm-12 ">
@@ -112,14 +106,14 @@
           <div class="panel-body">
 
             <div class="row">
-            <div class="alert alert-danger alert-dismissable" ng-show="errorInSlot">
-          <a ng-click="hideError()" class="close" aria-label="close">×</a>
-          <strong>Error</strong> {{errorMessage}}.
-        </div>
-        <div class="alert alert-success alert-dismissable" ng-show="successInSlot">
-          <a ng-click="hideError()" class="close" aria-label="close">&times;</a>
-          <strong>Success!</strong> {{successMessage}}
-        </div>
+              <div class="alert alert-danger alert-dismissable" ng-show="errorInSlot">
+                <a ng-click="hideError()" class="close" aria-label="close">×</a>
+                <strong>Error</strong> {{errorMessage}}.
+              </div>
+              <div class="alert alert-success alert-dismissable" ng-show="successInSlot">
+                <a ng-click="hideError()" class="close" aria-label="close">&times;</a>
+                <strong>Success!</strong> {{successMessage}}
+              </div>
               <div class="col-sm-4">
                 <label>Facility</label>
                 <div class="dropdown">

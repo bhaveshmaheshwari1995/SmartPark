@@ -1,12 +1,5 @@
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        Dashboard
-        <small>Control panel</small>
-      </h1>
-    </section>
 
     <!-- Main content -->
     <section class="content">
@@ -17,10 +10,7 @@
           <div class="small-box bg-aqua">
             <div class="inner">
               <h3 class="margin-null">Monitor</h3>
-
-
             </div>
-
           </div>
         </div>
       </div>
@@ -34,37 +24,29 @@
                 <button ng-repeat='slot in parkingSlots' class="btn btn-default custom-btn facility {{slot.status}}" id="{{slot.name}}" data-toggle="modal" data-target="#myModal" style="font-size:15px;"class='available-block' ng-click = 'slowParkingDetails(slot)' ><span class = "available-block"></span>
                   {{slot.name}}
                 </button>
-                <!-- <button ng-repeat='slot in parkingSlots' class="btn btn-default custom-btn facility {{slot.status}}" id="{{slot.slot}}" data-toggle="modal" data-target="#myModal" style="font-size:15px;"
-                        class='available-block' ng-click = 'slowParkingDetails(slot.slot)' ><span class = "available-block"></span>
-                        {{slot.slot}}
-                      </button> -->
+              </div>
+            </div></div>
+          </div>
+        </div>
+        <div id="myModal" class="modal fade" role="dialog">
+          <div class="modal-dialog">
 
-              <!-- <button ng-repeat='slot in data' class="btn btn-default custom-btn facility {{slot.status}}" id="{{slot.slot}}" data-toggle="modal" data-target="#myModal" style="font-size:10px;"
-              class='available-block' ng-click = 'slowParkingDatails(slot.slot)' ><span class = "available-block"></span>
-              {{slot.slot}}
-            </button>  -->
+            <!-- Modal content-->
+            <div class="modal-content">
+              
+              <div class="modal-body">
+                <p>name : {{slotDetails.name}} </p>
+                <p>Sensor : {{slotDetails.slotId}} </p>
+                <p>In Time : {{slotDetails.inTime}} </p>
+                <p>Vehicle No : {{slotDetails.regNo}} </p>
+                <p>Facility : {{slotDetails.facilityId}} </p>
+                <p>Client : {{slotDetails.clientId}} </p>
+              </div>
+              
+            </div>
 
           </div>
-        </div></div>
-      </div>
-    </div>
-    <div id="myModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-    
-      <div class="modal-body">
-        <p>name : {{slotDetails.name}} </p>
-        <p>Sensor : {{slotDetails.slotId}} </p>
-        <p>Facility : {{slotDetails.facilityId}} </p>
-        <p>Client : {{slotDetails.clientId}} </p>
-      </div>
-      
-    </div>
-
-  </div>
-</div>
+        </div>
 
 <!--     <div class="col-sm-2">
       <div class="panel panel-default custom-panel">

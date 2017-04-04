@@ -1,6 +1,6 @@
 'use strict';
-angular.module('apm.dashboard', ['ngRoute','ngMaterial','ng-fusioncharts'])
-.controller('dashboardController', function($scope,$rootScope, $http,$timeout, $mdDialog) {
+angular.module('apm.dashboard', ['ngRoute','ng-fusioncharts'])
+.controller('dashboardController', function($scope,$rootScope, $http,$timeout) {
 	console.log('dashboard called');
     var data=[];
     var facilities = [];
@@ -49,8 +49,9 @@ angular.module('apm.dashboard', ['ngRoute','ngMaterial','ng-fusioncharts'])
     }
     var getData = function(client){
         console.log('getData called')
-        $http.get('http://54.190.10.153:4200/api/slots/'+client)
+        $http.get(config.hostname+'/api/slots/'+client)
         .then(function(response){
+        	console.log(response.data)
             if(response.data.success){
                 $scope.data =  response.data.slots;
                 callback();
