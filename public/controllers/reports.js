@@ -4,22 +4,33 @@ angular.module('apm.reports', ['ngRoute','ng-fusioncharts'])
 	console.log('reports called');
     $scope.data = {}
     $scope.billingArray=[];
-
+    var hour = 0;
     var callback = function(){
         var orders = $scope.data;
-        console.log('orders ',orders);
-        var tempslotid='';
-        if(orders.length != 0){
+        var tempFacilityArray=[];
+        var hour = 0;
+        if(orders.length != 0) {
             orders.forEach(function(order) {
-				console.log(order);
-            
+				tempFacilityArray.push(order.facilityId);            
 			});
-        }
+			tempFacilityArray = _.uniq(tempFacilityArray);
+			tempFacilityArray.forEach(function(entry){
+				hour = 0;
+				orders.forEach(function(order) {
+					if(entry == order.facilityId){
+						if(order.outTime && order.inTime){
+							var occHours = (new Date(order.outTime) - new Date(order.inTime))/(60*60*1000)
+							hour = hour + occHours;
+						}
+					}
+				});
+				$scope.billingArray.push({'facilityId':entry,'hours':hour});
+			})
+		}
     }
     var getFacilityInfo = function(){
         $http.get(config.hostname+'/api/reports/'+$scope.fromDate+'/'+$scope.toDate)
         .then(function(response){
-            console.log(response.data)
             if(response.data.success){
                 console.log(response.data.orders);
                 $scope.data = response.data.orders;
@@ -31,11 +42,8 @@ angular.module('apm.reports', ['ngRoute','ng-fusioncharts'])
     }
 
     $scope.submitDate = function(){
-        console.log("aaya");
         $scope.fromDate = document.getElementById('fromDate').value;
         $scope.toDate = document.getElementById('toDate').value
-        console.log($scope.fromDate);
-        console.log("to "+$scope.toDate);
         getFacilityInfo();
     }
 

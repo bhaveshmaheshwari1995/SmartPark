@@ -71,6 +71,10 @@ app.run(function($rootScope, $http, $state) {
       }
 
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+        /*console.log("toState "+JSON.stringify(toState.name)+" fromState "+JSON.stringify(fromState.name));
+        if(fromState.name == 'monitor'){
+            socket.removeAllListeners("news");
+        }*/
     });
 })
 

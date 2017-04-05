@@ -70,7 +70,7 @@
           </thead>
           <tbody>
             <tr ng-repeat="billInfo in billingArray | filter : searchFacility ">
-              <td>{{billInfo.facility}}</td>
+              <td>{{billInfo.facilityId}}</td>
               <td>{{billInfo.hours}}</td>
               <td>{{billInfo.hours * 30}}</td>
             </tr>
