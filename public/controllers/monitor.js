@@ -26,7 +26,7 @@ angular.module('apm.monitor', ['ngRoute'])
 					document.getElementById(currSlotInfo.name).className = "btn btn-default custom-btn facility full";
 					$scope.parkingSlots.forEach(function(entry){
 						if(entry.name==currSlotInfo.name){
-							entry.inTime = currSlotInfo.inTime;
+							entry.inTime = new Date(currSlotInfo.inTime);
 							entry.regNo = currSlotInfo.regNo;
 						}
 					});

@@ -11,19 +11,10 @@ angular.module('apm.reports', ['ngRoute','ng-fusioncharts'])
         var tempslotid='';
         if(orders.length != 0){
             orders.forEach(function(order) {
+				console.log(order);
             
-        });
-
-        $scope.billingArray = tempFacility;
-        var sum = 0;
-        $scope.billingArray.forEach(function(entry) {
-            sum = sum + (entry.hours);    
-        });
-        $scope.sum = sum*30;
-
+			});
         }
-
-
     }
     var getFacilityInfo = function(){
         $http.get(config.hostname+'/api/reports/'+$scope.fromDate+'/'+$scope.toDate)
@@ -32,7 +23,7 @@ angular.module('apm.reports', ['ngRoute','ng-fusioncharts'])
             if(response.data.success){
                 console.log(response.data.orders);
                 $scope.data = response.data.orders;
-                //callback();
+                callback();
             }
         },function(response){
             console.log(response.data);
