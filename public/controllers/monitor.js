@@ -81,7 +81,7 @@ angular.module('apm.monitor', ['ngRoute'])
     }, 1500);
 
 
-    getData($rootScope.client.clientId);
+//    getData($rootScope.client.clientId);
     /*$scope.data = 
                [{slot:"A1",facility:"A",status:'available',in_time:'7-mar-2016',vehicle_no:'TN 14 H 1203',client:'Aspire'},
                 {slot:"A2",facility:"A",status:'full',in_time:'1-mar-2016',vehicle_no:'TN 14 H 4503',client:'Aspire'},
