@@ -21,7 +21,7 @@
             <div class="panel-heading custom-panel-heading">Facility {{facility}}</div>
             <div class="panel-body"> <div class="btn-toolbar custom-toolbar">
               <div class="btn-group btn-group-sm">
-                <button ng-repeat='slot in parkingSlots' class="btn btn-default custom-btn facility {{slot.status}}" id="{{slot.name}}" data-toggle="modal" data-target="#myModal" style="font-size:15px;"class='available-block' ng-click = 'slowParkingDetails(slot)' ><span class = "available-block"></span>
+                <button ng-repeat='slot in parkingSlots' class="btn btn-default custom-btn facility {{slot.status}}" id="{{slot.name}}" data-toggle="modal" data-target="#myModal" style="font-size:15px;"class='available-block' ng-click = 'showParkingDetails(slot)' ><span class = "available-block"></span>
                   {{slot.name}}
                 </button>
               </div>

@@ -15,13 +15,21 @@ angular.module('apm.monitor', ['ngRoute'])
 			if((currSlotInfo.name ==   parkingSlot.name )) {
 				if(currSlotInfo.status == 'available'){
 					document.getElementById(currSlotInfo.name).className = "btn btn-default custom-btn facility available";
-					$scope.parkingSlots.inTime = "not available";
-					$scope.parkingSlots.regNo = "not available";
+					$scope.parkingSlots.forEach(function(entry){
+						if(entry.name==currSlotInfo.name){
+							entry.inTime = "";
+							entry.regNo = "";
+						}
+					});
 
 				}else if(currSlotInfo.status == 'full'){
 					document.getElementById(currSlotInfo.name).className = "btn btn-default custom-btn facility full";
-					$scope.parkingSlots.inTime = currSlotInfo.inTime;
-					$scope.parkingSlots.regNo = currSlotInfo.regNo;
+					$scope.parkingSlots.forEach(function(entry){
+						if(entry.name==currSlotInfo.name){
+							entry.inTime = currSlotInfo.inTime;
+							entry.regNo = currSlotInfo.regNo;
+						}
+					});
 				}
 			}
 		});
@@ -32,12 +40,11 @@ angular.module('apm.monitor', ['ngRoute'])
 
 	var callback=function() {
 
-		$scope.slowParkingDetails = function(slotName){
+		$scope.showParkingDetails = function(slotName){
 			$scope.slotDetails = slotName;
 			console.log($scope.slotDetails)
 		};
-		if($scope.facility == "")
-		{
+		if($scope.facility == "") {
 			console.log($rootScope.client.defaultFacility)
 			$scope.facility = $rootScope.client.defaultFacility;
 		}
