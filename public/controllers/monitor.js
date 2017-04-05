@@ -43,11 +43,8 @@ angular.module('apm.monitor', ['ngRoute'])
 		}
 
 		$scope.data.forEach(function(entry) {
-			console.log($scope.facility +" "+entry.facilityId+" "+$rootScope.client.clientId+' '+entry.clientId)
 			if($scope.facility == entry.facilityId && $rootScope.client.clientId == entry.clientId)
-				entry.inTime = "not available";
-				entry.regNo = "not available";
-				$scope.parkingSlots.push(entry);    
+				$scope.parkingSlots.push(entry);
 		});
 		console.log($scope.parkingSlots)
 

@@ -136,7 +136,7 @@
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu">
           <li><a class="head" style='font-size:20px'><span>Select Client</span></a></li>
-          <li ng-repeat = "client in clientList | filter : searchClient"><a ng-click="selectClient(client)" ><span>{{client.clientId}}</span></a></li>
+          <li ng-repeat = "client in clientList | filter : searchClient" ><a ng-click="selectClient(client)" ><span>{{client.clientId}}</span></a></li>
 
         </ul>
         <ul class="sidebar-menu">

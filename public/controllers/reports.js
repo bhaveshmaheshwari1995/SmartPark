@@ -9,10 +9,6 @@ angular.module('apm.reports', ['ngRoute','ng-fusioncharts'])
         var tempFacility = []
         var parkingSlots = $scope.data.parkingSlots;
         var orders = $scope.data.orders;
-        if(orders>5){
-            orders.slice(0,5);
-        }
-
         console.log('parkingSlots ',parkingSlots);
         console.log('orders ',orders);
         var tempslotid='';
@@ -53,11 +49,11 @@ angular.module('apm.reports', ['ngRoute','ng-fusioncharts'])
     var getFacilityInfo = function(){
         $http.get(config.hostname+'/api/reports/'+$scope.fromDate+'/'+$scope.toDate)
         .then(function(response){
+            console.log(response.data)
             if(response.data.success){
-                console.log(response);
-                $scope.data = response.data.data;
                 console.log(response.data.data);
-                callback();
+                $scope.data = response.data.data;
+                //callback();
             }
         },function(response){
             console.log(response.data);

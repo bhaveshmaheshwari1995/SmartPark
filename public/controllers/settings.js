@@ -5,31 +5,10 @@ angular.module('apm.settings', ['ngRoute','ng-fusioncharts'])
     $scope.showFacilityUI = false;
     $scope.showClientUI = false;
     $scope.facilityList = {}
-
-    
-/*    $scope.facilityList = [
-    {
-      "_id": "58deabdcc42cc6296b554df1",
-      "name": "A",
-      "clientId": "Aspire",
-      "capacity": 8,
-      "createdAt": "2017-03-31T19:19:56.755Z",
-      "__v": 0
-    },
-    {
-      "_id": "58deabecc42cc6296b554df2",
-      "name": "B",
-      "clientId": "Aspire",
-      "capacity": 8,
-      "createdAt": "2017-03-31T19:20:12.523Z",
-      "__v": 0
-    }
-  ];*/
     
     var getFacilitylist = function(client){
         $http.get(config.hostname+'/api/facility/'+client)
         .then(function(response){
-            console.log(response.data)
             if(response.data.success){
                 $scope.facilityList = response.data.facilities;
                 console.log(response.data)
@@ -45,45 +24,83 @@ angular.module('apm.settings', ['ngRoute','ng-fusioncharts'])
         getFacilitylist($rootScope.client.clientId);
     }, 1500);
 
-    
-
     var addFacility = function(data){
         $http.post(config.hostname+'/api/facility',data)
         .then(function(response){
             console.log(response);
             if(response.data.success){
-                console.log("Facility successfully added");
+                $scope.success = true;
+                $scope.error = false;
+                $scope.errorInSlot = false;
+                $scope.successMessage = "Facility added successfully";
+            }
+            else{
+                $scope.error = true;
+                $scope.successInSlot = false;
+                $scope.success = false;
+                $scope.errorMessage = "Unable to save data. Please check input.";
             }
             return response.data.code
         },function(response){
             console.log(response.data);
-            return 0;
+            $scope.error = true;
+            $scope.successInSlot = false;
+            $scope.success = false;
+            $scope.errorMessage = "Unable to save data. Please check input.";
         });
     }
 
     var addClient = function(data){
         $http.post(config.hostname+'/api/clients',data)
         .then(function(response){
+            console.log(response);
             if(response.data.success){
                 console.log("Client Added Successfully");
+                $scope.success = true;
+                $scope.error = false;
+                $scope.errorInSlot = false;
+                $scope.successMessage = "Client Added Successfully";
+                $rootScope.clientList.push(data);
             }
-            return response.data.code
+            else{
+                $scope.error = true;
+                $scope.successInSlot = false;
+                $scope.success = false;
+                $scope.errorMessage = "Unable to save data. Please check input.";
+                console.log('Error');
+            }
         },function(response){
             console.log(response.data);
-            return 0
+            $scope.error = true;
+            $scope.successInSlot = false;
+            $scope.success = false;
+            $scope.errorMessage = "Unable to save data. Please check input.";
+
         });
     }
-
     var addSlots = function(data){
         $http.post(config.hostname+'/api/slots',data)
         .then(function(response){
-            if(response.data.success){
+            if(response.data.success) {
                 console.log("slots added successfully");
+                $scope.successInSlot = true;
+                $scope.error = false;
+                $scope.errorInSlot = false;
+                $scope.successMessage = "Slots saved successfully";
             }
-            return response.data.code
+            else {
+                console.log('error');
+                $scope.errorInSlot = true;
+                $scope.success = false;
+                $scope.successInSlot = false;
+                $scope.errorMessage = "Unable to save data. Please check input.";
+            }
         },function(response){
             console.log(response.data);
-            return 0
+            $scope.errorInSlot = true;
+            $scope.success = false;
+            $scope.successInSlot = false;
+            $scope.errorMessage = "Error Please check input again";
         });
     }
 
@@ -109,47 +126,26 @@ angular.module('apm.settings', ['ngRoute','ng-fusioncharts'])
             dataToSend  = {client:$rootScope.client.clientId, name:$scope.newFacilityName};
             $scope.newFacilityName = "";
             $scope.newFacilityCapacity = "";
-            if(addFacility(dataToSend)==0){
-                $scope.error = true;
-                $scope.successInSlot = false;
-                $scope.errorMessage = "Unable to save data. Please check the data entered";
-                console.log('Error');
-            }
-            else{
-                $scope.success = true;
-                $scope.successMessage = "Data Entered Successfully";
-            }
+            addFacility(dataToSend);
         }
     }
     $scope.submitClient = function(){
         if($scope.newClientName == undefined || $scope.newClientName == "" || $scope.newDefaultFacility == undefined || $scope.newDefaultFacility == ""){
             $scope.error = true;
             $scope.successInSlot = false;
+            $scope.success = false;
             $scope.errorMessage = "Error Please check input again";
         }
         else{
             var dataToSend = {}
             $scope.error = false;
             $scope.errorInSlot = false;
-            dataToSend  = {client:$scope.newClientName, defaultFacility:$scope.newDefaultFacility};
-            if(addClient(dataToSend)){
-                $scope.error = true;
-                $scope.successInSlot = false;
-                $scope.errorMessage = "Unable to save data. Please check the data entered";
-                console.log('Error');
-
-            }
-            else{
-                $scope.success = true;
-                $scope.successMessage = "Data Entered Successfully";
-                $rootScope.clientList.push(dataToSend);
-                
-            }
+            dataToSend  = {clientId:$scope.newClientName, defaultFacility:$scope.newDefaultFacility};
+            addClient(dataToSend)
             $scope.newClientName = "";
             $scope.newDefaultFacility = "";
         }
     }
-
     
     $scope.loadDefaultFacility = function(){
         $scope.selectedFacilityName = $rootScope.client.defaultFacility;
@@ -162,7 +158,7 @@ angular.module('apm.settings', ['ngRoute','ng-fusioncharts'])
     var slotData = {};
     $scope.addSlotFields = function(){
 
-    if($scope.slotData == undefined || $scope.slotData.name == undefined || $scope.slotData.sensorId == undefined || $scope.slotData.name == "" || $scope.slotData.sensorId == ""){
+        if($scope.slotData == undefined || $scope.slotData.name == undefined || $scope.slotData.sensorId == undefined || $scope.slotData.name == "" || $scope.slotData.sensorId == ""){
             console.log('Error');
             $scope.errorInSlot = true;
             $scope.successInSlot = false;
@@ -175,7 +171,7 @@ angular.module('apm.settings', ['ngRoute','ng-fusioncharts'])
             slotData.facility = $scope.selectedFacilityName;
             slotFields.push(slotData);
         }
-            $scope.slotData = {}
+        $scope.slotData = {}
     }
     $scope.addSlots = function(){
         if(slotFields.length == 0){
@@ -189,8 +185,6 @@ angular.module('apm.settings', ['ngRoute','ng-fusioncharts'])
             $scope.errorInSlot = false;
             var dataToSend = {client:$rootScope.client.clientId, slot:slotFields}
             addSlots(dataToSend)
-            $scope.successInSlot = true;
-            $scope.successMessage = "Data Entered successfully";
         }
         slotFields=[]
     }
@@ -200,5 +194,9 @@ angular.module('apm.settings', ['ngRoute','ng-fusioncharts'])
         $scope.success = false;
         $scope.successInSlot = false;
     }
+    
+    $("#addSlot").on("hidden.bs.modal", function () {
+        slotFields = [];
+    });    
 
 });
