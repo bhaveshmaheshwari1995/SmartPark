@@ -2,6 +2,11 @@
 angular.module('apm.monitor', ['ngRoute'])
 .controller('monitorController', function($scope, $rootScope, $http, $stateParams,$timeout, $state) {
 	console.log('monitor called ');
+	/*var tempdate = '2017-04-06T17:19:44.885Z';
+	console.log(tempdate);
+	var m = moment.utc(tempdate);
+	var time = m.utcOffset("+05:30").format('MMM Do YYYY h:mm a');
+	console.log(time);*/
 	$scope.parkingSlots = [];
 
 	var socket = io.connect(config.hostname);
@@ -26,7 +31,10 @@ angular.module('apm.monitor', ['ngRoute'])
 					document.getElementById(currSlotInfo.name).className = "btn btn-default custom-btn facility full";
 					$scope.parkingSlots.forEach(function(entry){
 						if(entry.name==currSlotInfo.name){
-							entry.inTime = new Date(currSlotInfo.inTime);
+							var m = moment.utc(currSlotInfo.inTime);
+							var time = m.utcOffset("+05:30").format('MMM Do YYYY h:mm a');
+							console.log(time)
+							entry.inTime = time;
 							entry.regNo = currSlotInfo.regNo;
 						}
 					});
